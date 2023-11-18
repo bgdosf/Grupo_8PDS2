@@ -7,4 +7,5 @@ Makefile
 cmake_install.cmake
 TaskManager
 Tests
+build
 prod.db
