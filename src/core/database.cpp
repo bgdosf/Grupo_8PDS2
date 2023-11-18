@@ -22,4 +22,5 @@ void createTables() {
         std::cout << "SUCESS!";
     }
 
+    sqlite3_close(db);
 }
