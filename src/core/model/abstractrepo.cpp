@@ -10,16 +10,16 @@ Repo::~Repo() {
 
 int Repo::execSql(std::string command) const {
     char *err = 0;
-    int rc = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &err);
+    int rc = sqlite3_exec(db, command.c_str(), nullptr, nullptr, &err);
     return (rc == SQLITE_OK);
 }
 
-std::vector<std::map<std::string, std::string>> Repo::select(std::string command) const {
+std::vector<std::map<std::string, std::string>> Repo::sqlselect(std::string command) const {
     sqlite3_stmt *statement;
     std::vector<std::map<std::string, std::string>> result;
 
     // Consulta
-    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+    if (sqlite3_prepare_v2(db, command.c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         // Retornando previamente por erro, no caso, a consulta retorna como vazia
         return result;
     }

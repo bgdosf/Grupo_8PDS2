@@ -1,7 +1,11 @@
 #include "database.hpp"
 
+#include "service/abstractservice.hpp"
+#include "service/authservice.hpp"
+
 #include <iostream>
 #include <cstring>
+
 
 int main(int argc, char* argv[]) {
     setenv("DATABASE", "prod.db", 0);
@@ -13,7 +17,13 @@ int main(int argc, char* argv[]) {
     if (strcmp(argv[1], "createdb") == 0) {
         createTables();
     } else if (strcmp(argv[1], "run") == 0) {
-        std::cout << "oi\n";
+        Service *s = new AuthService();
+        while (s != nullptr) {
+            Service *old_service = s;
+            s = s->handler();
+
+            delete old_service;
+        }
     }
     
 }
