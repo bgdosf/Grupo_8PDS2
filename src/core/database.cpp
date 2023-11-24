@@ -19,7 +19,7 @@ void createTables() {
         std::cout << "SQL error: " << err << std::endl;
         sqlite3_free(err);
     } else {
-        std::cout << "SUCESS!";
+        std::cout << "SUCESS!\n";
     }
 
     sqlite3_close(db);

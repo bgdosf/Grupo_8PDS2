@@ -6,7 +6,7 @@ include_directories("src/include")
 file(GLOB SOURCES "src/core/*.cpp" "src/core/model/*.cpp" "src/core/view/*.cpp" "src/core/service/*.cpp")
 add_executable(TaskManager ${SOURCES})
 
-file(GLOB TESTES "src/core/model/*.cpp" "src/core/view/*.cpp" "src/core/service/*.cpp" "src/tests/*.cpp" "src/tests/*.h")
+file(GLOB TESTES "src/core/database.cpp" "src/core/model/*.cpp" "src/core/view/*.cpp" "src/core/service/*.cpp" "src/tests/*.cpp" "src/tests/*.h")
 add_executable(Tests ${TESTES})
 
 find_package(SQLite3 REQUIRED)
