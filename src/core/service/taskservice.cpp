@@ -41,13 +41,13 @@ Service *TaskService::addTask() {
 
 int TaskService::checkTaskExistenceByTitle(std::string title) {
     Task *t = repo.getTaskByTitle(title);
-    if (t != nullptr) return 0;
+    if (t == nullptr) return 0;
     return 1;
 }
 
 int TaskService::createTask(std::string title, std::string username, std::string description, std::string delivery_date) {
     Task *t = repo.createTask(title, username, description, delivery_date);
-    if (t != nullptr) return 0;
+    if (t == nullptr) return 0;
     return 1;
 }
 
