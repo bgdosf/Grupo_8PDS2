@@ -1,4 +1,9 @@
+#pragma once
+
 #include <sqlite3.h>
+#include <string>
+#include <vector>
+#include <map>
 
 class Repo {
     public:
@@ -16,7 +21,7 @@ class Repo {
         /// @brief executa um select, onde um resultado é obtido
         /// @param command 
         /// @return vetor de mapa representando cada atributo e o valor correspondente
-        virtual std::vector<std::map<std::string, std::string>> select(std::string command) const;
+        virtual std::vector<std::map<std::string, std::string>> sqlselect(std::string command) const;
     protected:
-        sqlite3 db;
-}
+        sqlite3 *db;
+};

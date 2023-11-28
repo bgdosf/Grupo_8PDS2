@@ -10,16 +10,23 @@ void createTables() {
     sqlite3_open(getenv("DATABASE"), &db);
 
     char *err = 0;
-    std::string sql_user = "CREATE TABLE user (" 
+    std::string sql_tables = "CREATE TABLE user (" 
                       "username VARCHAR(100) PRIMARY KEY,"
-                      "password VARCHAR(100) NOT NULL);";
-    
-    int rc = sqlite3_exec(db, sql_user.c_str(), nullptr, nullptr, &err);
+                      "password VARCHAR(100) NOT NULL); ";
+    sql_tables += "CREATE TABLE task ("
+                "title VARCHAR(100) PRIMARY KEY, "
+                "username VARCHAR(100) NOT NULL, "
+                "description VARCHAR(500), "
+                "delivery_date VARCHAR(50), "
+                "is_finished BOOLEAN NOT NULL DEFAULT(false), "
+                "FOREIGN KEY(username) REFERENCES user(username));";
+
+    int rc = sqlite3_exec(db, sql_tables.c_str(), nullptr, nullptr, &err);
     if( rc != SQLITE_OK ){
         std::cout << "SQL error: " << err << std::endl;
         sqlite3_free(err);
     } else {
-        std::cout << "SUCESS!";
+        std::cout << "SUCESS!\n";
     }
 
     sqlite3_close(db);
