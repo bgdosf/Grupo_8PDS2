@@ -8,6 +8,7 @@
 Task* TaskRepo::getTaskByTitle(std::string title) {
   std::string sql = "SELECT * FROM task WHERE title = '" + title + "';"; 
   std::vector<std::map<std::string, std::string>> queryResult = sqlselect(sql);
+  std::cout<< sql << std::endl;
   if (queryResult.size() == 0) { // caso a fila de resultados esteja vazia
       return nullptr;
   }

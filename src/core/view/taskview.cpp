@@ -4,10 +4,21 @@ void TaskView::printOptions() {
     displayMessage("==================================================\n");
     displayMessage("Digite a opção que deseja acessar:\n");
     displayMessage("0 - Criar Tarefa\n");
-    displayMessage("1 - Sair do Sistema\n\n");
+    displayMessage("1 - Ver Tarefa\n\n");
+}
+
+void TaskView::printViewOptions() {
+    displayMessage("==================================================\n");
+    displayMessage("Digite a opção que deseja acessar:\n");
+    displayMessage("0 - Editar essa Tarefa\n");
+    displayMessage("1 - Voltar para a Lista de Tarefas\n\n");
 }
 
 void TaskView::userTasks(std::string username) {
+    std::cout << "\n";
+    displayMessage("==================================================\n");
+    displayMessage("Todas suas tarefas abaixo:\n\n");
+
     TaskRepo taskRepo;
 
     std::vector<Task*> tasks = taskRepo.getAllTasksByUsername(username);
@@ -19,7 +30,6 @@ void TaskView::userTasks(std::string username) {
 
     for (Task* task : tasks) {
         std::cout << "Título: " << task->title() << std::endl;
-        std::cout << "Usuário: " << task->user().username() << std::endl;
         std::cout << "Descrição: " << task->description() << std::endl;
         std::cout << "Data de Entrega: " << task->deliveryDate() << std::endl;
         std::cout << "Tarefa finalidade? " << (task->isFinished() ? "SIM :)" : "Ainda não :/") << std::endl;
@@ -33,15 +43,31 @@ void TaskView::userTasks(std::string username) {
     }
 }
 
-std::vector<std::string> TaskView::taskForm() {
+std::vector<std::string> TaskView::createTaskForm() {
     std::vector<std::string> response;
 
     displayMessage("Título da Tarefa: ");
     std::string title = getInput();
     displayMessage("Descrição: ");
     std::string description = getInput();
-    displayMessage("Data de término: ");
-    std::string delivery_date = getInput();
+        displayMessage("Número de dias a partir de hoje para data de término: ");
+    std::string days_from_now_string = getInput();
+
+    int days_from_now = stoi(days_from_now_string);
+    
+
+    // Obter data atual
+    std::time_t current_time = std::time(nullptr);
+    std::tm* current_date = std::localtime(&current_time);
+
+    // Adicionar dias à data atual
+    current_date->tm_mday += days_from_now;
+    std::mktime(current_date);
+
+    // Formatar a data para o formato "DD/MM/AAAA"
+    char buffer[20];
+    std::strftime(buffer, sizeof(buffer), "%d/%m/%Y", current_date);
+    std::string delivery_date = buffer;
 
 
     response.push_back(title);
@@ -49,4 +75,11 @@ std::vector<std::string> TaskView::taskForm() {
     response.push_back(delivery_date);
 
     return response;
+}
+
+std::string TaskView::viewTaskForm() {
+  displayMessage("Qual o título da tarefa que deseja ver? ");
+  std::string title = getInput();
+
+  return title;
 }

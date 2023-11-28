@@ -14,6 +14,10 @@ public:
 
     Service *addTask();
 
+    Service *editTask();
+
+    Service *viewTask();
+
 private:
     TaskView view;
     TaskRepo repo;
