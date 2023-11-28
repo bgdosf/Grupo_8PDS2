@@ -17,4 +17,5 @@ public:
     void userTasks(std::string username);
     std::vector<std::string> createTaskForm();
     std::string viewTaskForm();
+    std::string createTitleTaskForm();
 };

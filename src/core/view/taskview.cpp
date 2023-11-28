@@ -46,8 +46,6 @@ void TaskView::userTasks(std::string username) {
 std::vector<std::string> TaskView::createTaskForm() {
     std::vector<std::string> response;
 
-    displayMessage("Título da Tarefa: ");
-    std::string title = getInput();
     displayMessage("Descrição: ");
     std::string description = getInput();
         displayMessage("Número de dias a partir de hoje para data de término: ");
@@ -70,7 +68,6 @@ std::vector<std::string> TaskView::createTaskForm() {
     std::string delivery_date = buffer;
 
 
-    response.push_back(title);
     response.push_back(description);
     response.push_back(delivery_date);
 
@@ -82,4 +79,11 @@ std::string TaskView::viewTaskForm() {
   std::string title = getInput();
 
   return title;
+}
+
+std::string TaskView::createTitleTaskForm() {
+    displayMessage("Título da tarefa: ");
+    std::string title = getInput();
+
+    return title;
 }

@@ -10,7 +10,9 @@ public:
 
     Service *handler() override;
 
-    Service *createTask();
+    int checkTaskExistenceByTitle(std::string title);
+
+    int createTask(std::string title, std::string username, std::string description, std::string delivery_date);
 
     Service *addTask();
 

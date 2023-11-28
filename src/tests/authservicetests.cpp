@@ -13,20 +13,20 @@ TEST_CASE("Testando servico de autenticação") {
     AuthService service;
 
     SUBCASE("Testando login válido de usuário") {
-        User *u = repo.createUser("luan", "luan1810");
-        int r = service.authenticate("luan", "luan1810");
+        User *u = repo.createUser("borges", "borges1810");
+        int r = service.authenticate("borges", "borges1810");
         CHECK(r == 1);
     }
 
     SUBCASE("Testando login inválido de usuário (senha errada)") {
-        User *u = repo.createUser("luan", "luan1810");
-        int r = service.authenticate("luan", "testesenha");
+        User *u = repo.createUser("borges", "borges1810");
+        int r = service.authenticate("borges", "testesenha");
         CHECK(r == 0);
     }
 
     SUBCASE("Testando login inválido de usuário (usuario errado)") {
-        User *u = repo.createUser("luan", "luan1810");
-        int r = service.authenticate("luanb", "luan1810");
+        User *u = repo.createUser("borges", "borges1810");
+        int r = service.authenticate("borgesb", "borges1810");
         CHECK(r == 0);
     }
 

@@ -16,26 +16,39 @@ Service *TaskService::handler() {
 }
 
 Service *TaskService::addTask() {
+    int taskExist;
     std::vector<std::string> result;
     std::string title;
-    Task *t;
     view.displayMessage("Digite exit no campo de título caso deseje voltar!\n");
     do {
-        result = view.createTaskForm();
-        title = result[0];
+        title = view.createTitleTaskForm();
         if (title == "exit") return new TaskService(loggedInUser);
-        t = repo.getTaskByTitle(title);
-        if (t != nullptr) {
+        int taskExist = checkTaskExistenceByTitle(title);
+        if (!taskExist) {
             view.displayMessage("Tarefa com esse título já existe!\n");
         }
-    } while(t != nullptr);
+    } while(!taskExist);
+    
+    result = view.createTaskForm();
 
-    if (repo.createTask(title, loggedInUser->username(), result[1], result[2]) != nullptr) {
+    if (createTask(title, loggedInUser->username(), result[0], result[1])) {
         view.displayMessage("Tarefa criada\n");
     } else {
         view.displayMessage("Tarefa não criada! (Erro no sistema :( )\n");
     }
     return new TaskService(loggedInUser);
+}
+
+int TaskService::checkTaskExistenceByTitle(std::string title) {
+    Task *t = repo.getTaskByTitle(title);
+    if (t != nullptr) return 0;
+    return 1;
+}
+
+int TaskService::createTask(std::string title, std::string username, std::string description, std::string delivery_date) {
+    Task *t = repo.createTask(title, username, description, delivery_date);
+    if (t != nullptr) return 0;
+    return 1;
 }
 
 
@@ -64,10 +77,15 @@ Service *TaskService::viewTask() {
 
   switch (response) {
     case 0:
-        return addTask();
+        return editTask();
     case 1:
         return new TaskService(loggedInUser);
     }
 
   return new TaskService(loggedInUser);
+}
+
+Service *TaskService::editTask() {
+
+    return new TaskService(loggedInUser);
 }
