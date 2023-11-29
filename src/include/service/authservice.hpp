@@ -25,6 +25,6 @@ public:
     int authenticate(std::string username, std::string password);
 
 private:
-    LoginView view;
-    UserRepo repo;
+    LoginView _view;
+    UserRepo _repo;
 };

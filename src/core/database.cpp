@@ -12,6 +12,7 @@ void createTables() {
     char *err = 0;
     std::string sql_tables = "CREATE TABLE user (" 
                       "username VARCHAR(100) PRIMARY KEY,"
+<<<<<<< HEAD
                       "password VARCHAR(100) NOT NULL); ";
     sql_tables += "CREATE TABLE task ("
                 "title VARCHAR(100) PRIMARY KEY, "
@@ -22,6 +23,26 @@ void createTables() {
                 "FOREIGN KEY(username) REFERENCES user(username));";
 
     int rc = sqlite3_exec(db, sql_tables.c_str(), nullptr, nullptr, &err);
+=======
+                      "password VARCHAR(100) NOT NULL);";
+
+    
+    int rc = sqlite3_exec(db, sql_user.c_str(), nullptr, nullptr, &err);
+>>>>>>> main
+    if( rc != SQLITE_OK ){
+        std::cout << "SQL error: " << err << std::endl;
+        sqlite3_free(err);
+    } else {
+        std::cout << "SUCESS!\n";
+    }
+
+    std::string sql_tag = "CREATE TABLE tag (" 
+                      "id INTEGER NOT NULL PRIMARY KEY,"
+                      "name VARCHAR(100) NOT NULL UNIQUE,"
+                      "username VARCHAR(100) NOT NULL, "
+                       "FOREIGN KEY (username) REFERENCES user(username));";
+
+    rc = sqlite3_exec(db, sql_tag.c_str(), nullptr, nullptr, &err);
     if( rc != SQLITE_OK ){
         std::cout << "SQL error: " << err << std::endl;
         sqlite3_free(err);

@@ -1,0 +1,32 @@
+#pragma once
+
+#include "service/abstractservice.hpp"
+#include "model/tagrepo.hpp"
+#include "view/tagview.hpp"
+#include "model/user.hpp"
+
+
+class TagService: public Service {
+public:
+    TagService(User u): _tagRepo(u), _user(u) {}
+
+    Service *handler() override;
+
+    /// @brief lista as tags do usuario
+    /// @return o proximo controller
+    Service *listTags();
+
+    /// @brief adiciona uma tag
+    /// @return o proximo controller
+    Service *addTag();
+
+    /// @brief atualiza uma tag
+    /// @return o proximo controller
+    Service *updateTag();
+
+
+private:
+    User _user;
+    TagRepo _tagRepo;
+    TagView _tagView;
+};
