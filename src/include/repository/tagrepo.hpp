@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/abstractrepo.hpp"
+#include "repository/abstractrepo.hpp"
 #include "model/user.hpp"
 #include "model/tag.hpp"
 

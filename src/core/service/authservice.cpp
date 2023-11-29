@@ -22,14 +22,9 @@ Service *AuthService::login() {
     _view.displayMessage("Login invalido\n");
         return new AuthService();
     } else {
-<<<<<<< HEAD
-        User *loggedInUser = repo.getUserByName(data.at(0));
+        User *loggedInUser = _repo.getUserByName(data.at(0));
 
         return new TaskService(loggedInUser);
-=======
-        User *u = _repo.getUserByName(data.at(0));
-        return new TagService(*u);
->>>>>>> main
     }
 }
 

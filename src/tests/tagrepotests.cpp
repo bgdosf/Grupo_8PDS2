@@ -3,8 +3,8 @@
 
 #include "database.hpp"
 #include "model/user.hpp"
-#include "model/userrepo.hpp"
-#include "model/tagrepo.hpp"
+#include "repository/userrepo.hpp"
+#include "repository/tagrepo.hpp"
 
 TEST_CASE("Testando repositório de usuário") {
     const char *dbname = "tagrepotest.db";
