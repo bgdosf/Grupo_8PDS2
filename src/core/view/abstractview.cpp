@@ -8,6 +8,6 @@ void View::displayMessage(std::string message) const {
 
 std::string View::getInput() const {
     std::string response;
-    std::cin >> response;
+    std::getline(std::cin, response);
     return response;
 }

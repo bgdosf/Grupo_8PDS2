@@ -3,7 +3,7 @@
 
 #include "database.hpp"
 #include "model/user.hpp"
-#include "model/userrepo.hpp"
+#include "repository/userrepo.hpp"
 
 TEST_CASE("Testando repositório de usuário") {
     const char *dbname = "userrepotest.db";

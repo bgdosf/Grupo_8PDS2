@@ -2,7 +2,8 @@
 
 #include "service/abstractservice.hpp"
 #include "view/loginview.hpp"
-#include "model/userrepo.hpp"
+#include "repository/userrepo.hpp"
+#include "service/taskservice.hpp"
 
 class AuthService: public Service {
 public:
@@ -24,6 +25,6 @@ public:
     int authenticate(std::string username, std::string password);
 
 private:
-    LoginView view;
-    UserRepo repo;
+    LoginView _view;
+    UserRepo _repo;
 };
