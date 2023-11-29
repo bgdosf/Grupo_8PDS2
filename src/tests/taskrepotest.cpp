@@ -31,19 +31,10 @@ TEST_CASE("Testando repositório de tarefas") {
     CHECK_EQ(taskVector[1]->title(), t2->title());
   }
 
-  SUBCASE("Testando erro ao criar tarefa com titulo já existente") {
-    User *u = userRepo.createUser("borges", "borges1810");
-    Task *t1 = taskRepo.createTask("Tarefa", "borges", "Teste1", "2023-11-26");
-    Task *t2 = taskRepo.createTask("Tarefa", "borges", "Teste2", "2023-11-26");
+  SUBCASE("Testando pegar tarefa com id inexistente") {
 
-    CHECK_EQ(t2, nullptr);
   }
 
-  SUBCASE("Testando pegar tarefa por um título que não eixste") {
-    Task *t = taskRepo.getTaskByTitle("Tarefa");
-
-    CHECK_EQ(t, nullptr);
-  }
 
   remove(dbname);
 }

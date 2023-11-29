@@ -1,27 +1,28 @@
 #pragma once
 
+#include "repository/taskrepo.hpp"
 #include "service/abstractservice.hpp"
 #include "view/taskview.hpp"
-#include "repository/taskrepo.hpp"
 
-class TaskService: public Service {
-public:
-    TaskService(User* user) : loggedInUser(user) {}
+class TaskService : public Service {
+ public:
+  TaskService(User *user) : loggedInUser(user) {}
 
-    Service *handler() override;
+  Service *handler() override;
 
-    int checkTaskExistenceByTitle(std::string title);
+  int checkTaskExistenceById(int id);
 
-    int createTask(std::string title, std::string username, std::string description, std::string delivery_date);
+  int createTask(std::string title, std::string username,
+                 std::string description, std::string delivery_date);
 
-    Service *addTask();
+  Service *addTask();
 
-    Service *editTask();
+  Service *editTask();
 
-    Service *viewTask();
+  Service *viewTask();
 
-private:
-    TaskView view;
-    TaskRepo repo;
-    User* loggedInUser;
+ private:
+  TaskView view;
+  TaskRepo repo;
+  User *loggedInUser;
 };

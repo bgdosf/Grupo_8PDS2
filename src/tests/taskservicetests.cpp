@@ -1,12 +1,10 @@
-#include "doctest.h"
-
-
 #include "database.hpp"
+#include "doctest.h"
 #include "model/task.hpp"
-#include "repository/taskrepo.hpp"
-#include "service/taskservice.hpp"
 #include "model/user.hpp"
+#include "repository/taskrepo.hpp"
 #include "repository/userrepo.hpp"
+#include "service/taskservice.hpp"
 
 TEST_CASE("Testando service de tarefas") {
   const char *dbname = "taskrepotest.db";
@@ -18,8 +16,8 @@ TEST_CASE("Testando service de tarefas") {
   TaskService taskService(u);
 
   SUBCASE("Testando criação de tarefa válida") {
-      int r = taskService.createTask("tarefa", "cae", "teste", "11/28/2023");
-      CHECK(r == 1);
+    int r = taskService.createTask("tarefa", "cae", "teste", "11/28/2023");
+    CHECK(r == 1);
   }
 
   remove(dbname);

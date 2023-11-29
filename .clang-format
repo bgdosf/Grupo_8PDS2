@@ -1,0 +1,12 @@
+{
+  "BasedOnStyle": "Google",
+  "IndentWidth": 2,
+  "AlignTrailingComments": true,
+  "AllowShortIfStatementsOnASingleLine": true,
+  "BraceWrapping": {
+    "AfterReturn": true,
+    "AfterFunction": false,
+    "AfterClass": false,
+    "AfterControlStatement": false
+  }
+}

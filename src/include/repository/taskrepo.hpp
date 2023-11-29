@@ -1,18 +1,21 @@
 #pragma once
 
-#include "repository/abstractrepo.hpp"
-#include "model/task.hpp"
-
 #include <string>
 
-class TaskRepo: public Repo {
-public:
+#include "model/task.hpp"
+#include "repository/abstractrepo.hpp"
 
-    Task* getTaskByTitle(std::string title);
+class TaskRepo : public Repo {
+ public:
+  Task* getTaskById(int id);
 
-    Task* createTask(std::string title, std::string username, std::string description, std::string deliveryDate);
+  Task* createTask(std::string title, std::string username,
+                   std::string description, std::string deliveryDate);
 
-    Task* updateTask(std::string title, std::string username, std::string description, std::string deliveryDate);
+  Task* updateTask(std::string title, std::string username,
+                   std::string description, std::string deliveryDate);
 
-    std::vector<Task*> getAllTasksByUsername(std::string username);
+  std::vector<Task*> getAllTasksByUsername(std::string username);
+
+  Task* getTaskByIdAndUsername(int id, std::string username);
 };
