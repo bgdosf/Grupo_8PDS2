@@ -18,4 +18,6 @@ class TaskRepo : public Repo {
   std::vector<Task*> getAllTasksByUsername(std::string username);
 
   Task* getTaskByIdAndUsername(int id, std::string username);
+
+  Task* deleteTaskByIdAndUsername(int id, std::string username);
 };
