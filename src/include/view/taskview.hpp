@@ -10,10 +10,13 @@
 #include "view/abstractview.hpp"
 
 class TaskView : public View {
- public:
-  void printOptions();
-  void printViewOptions();
-  void userTasks(std::string username);
-  std::vector<std::string> createTaskForm();
-  int viewTaskForm();
+   public:
+    void printOptions();
+    void printViewOptions();
+    void userTask(Task task);
+    void userTasks(std::vector<Task *>, std::string username);
+    int deleteTaskForm();
+    int finishTaskForm();
+    std::vector<std::string> createTaskForm();
+    int viewTaskForm();
 };

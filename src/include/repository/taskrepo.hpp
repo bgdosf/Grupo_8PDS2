@@ -6,20 +6,24 @@
 #include "repository/abstractrepo.hpp"
 
 class TaskRepo : public Repo {
- public:
-  Task* getTaskById(int id);
+   public:
+    TaskRepo(User *u) : _u(*u) {}
 
-  Task* createTask(std::string title, std::string username,
-                   std::string description, std::string deliveryDate);
+    Task *getTask(int id);
 
-  Task* updateTask(std::string title, std::string username,
-                   std::string description, std::string deliveryDate);
+    Task *createTask(std::string title, std::string description,
+                     std::string deliveryDate);
 
-  std::vector<Task*> getAllTasksByUsername(std::string username);
+    std::vector<Task *> getAllTasks();
 
-  Task* getTaskByIdAndUsername(int id, std::string username);
+    Task *getTaskById(int id);
 
-  Task* deleteTaskByIdAndUsername(int id, std::string username);
+    int deleteTask(int id);
 
-  Task* filterTasks(std::string username);
+    int finishTask(int id);
+
+    std::vector<Task *> filterTasks(std::string username);
+
+   private:
+    User _u;
 };
