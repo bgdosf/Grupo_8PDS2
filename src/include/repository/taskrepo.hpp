@@ -20,4 +20,6 @@ class TaskRepo : public Repo {
   Task* getTaskByIdAndUsername(int id, std::string username);
 
   Task* deleteTaskByIdAndUsername(int id, std::string username);
+
+  Task* filterTasks(std::string username);
 };
