@@ -21,17 +21,23 @@ void createTables() {
       "title VARCHAR(100) NOT NULL, "
       "username VARCHAR(100) NOT NULL, "
       "description VARCHAR(500), "
-      "delivery_date DATE, "
+      "delivery_date VARCHAR(50), "
       "is_finished BOOLEAN NOT NULL DEFAULT(false), "
       "FOREIGN KEY(username) REFERENCES user(username));";
 
+  sql_tables +=
+      "CREATE TABLE tag ("
+      "id INTEGER NOT NULL PRIMARY KEY,"
+      "name VARCHAR(100) NOT NULL UNIQUE,"
+      "username VARCHAR(100) NOT NULL, "
+      "FOREIGN KEY (username) REFERENCES user(username));";
   int rc = sqlite3_exec(db, sql_tables.c_str(), nullptr, nullptr, &err);
+
   if (rc != SQLITE_OK) {
     std::cout << "SQL error: " << err << std::endl;
     sqlite3_free(err);
   } else {
     std::cout << "SUCESS!\n";
   }
-
   sqlite3_close(db);
 }

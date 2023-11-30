@@ -1,10 +1,8 @@
-#include "doctest.h"
-
-
 #include "database.hpp"
+#include "doctest.h"
 #include "model/task.hpp"
-#include "repository/taskrepo.hpp"
 #include "model/user.hpp"
+#include "repository/taskrepo.hpp"
 #include "repository/userrepo.hpp"
 
 TEST_CASE("Testando repositório de tarefas") {
@@ -26,15 +24,13 @@ TEST_CASE("Testando repositório de tarefas") {
     Task *t1 = taskRepo.createTask("Tarefa1", "borges", "Teste1", "2023-11-26");
     Task *t2 = taskRepo.createTask("Tarefa2", "borges", "Teste2", "2023-11-26");
 
-    std::vector<Task*> taskVector = taskRepo.getAllTasksByUsername(u->username());
+    std::vector<Task *> taskVector =
+        taskRepo.getAllTasksByUsername(u->username());
     CHECK_EQ(taskVector[0]->title(), t1->title());
     CHECK_EQ(taskVector[1]->title(), t2->title());
   }
 
-  SUBCASE("Testando pegar tarefa com id inexistente") {
-
-  }
-
+  SUBCASE("Testando pegar tarefa com id inexistente") {}
 
   remove(dbname);
 }

@@ -6,7 +6,7 @@
 
 class TaskService : public Service {
  public:
-  TaskService(User *user) : loggedInUser(user) {}
+  TaskService(User *user) : _loggedInUser(user) {}
 
   Service *handler() override;
 
@@ -22,7 +22,7 @@ class TaskService : public Service {
   Service *viewTask();
 
  private:
-  TaskView view;
-  TaskRepo repo;
-  User *loggedInUser;
+  TaskView _view;
+  TaskRepo _repo;
+  User *_loggedInUser;
 };

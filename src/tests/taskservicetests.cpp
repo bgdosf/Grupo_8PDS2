@@ -20,5 +20,10 @@ TEST_CASE("Testando service de tarefas") {
     CHECK(r == 1);
   }
 
+  SUBCASE("Testando criação de tarefa inválida, com usuário não existente") {
+    int r = taskService.createTask("tarefa", "borges", "teste", "11/28/2023");
+    CHECK(r == 0);
+  }
+
   remove(dbname);
 }

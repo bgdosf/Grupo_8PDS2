@@ -1,9 +1,9 @@
 #include "service/taskservice.hpp"
 
 Service *TaskService::handler() {
-  view.userTasks(loggedInUser->username());
-  view.printOptions();
-  int response = stoi(view.getInput());
+  _view.userTasks(_loggedInUser->username());
+  _view.printOptions();
+  int response = stoi(_view.getInput());
 
   switch (response) {
     case 0:
@@ -12,28 +12,28 @@ Service *TaskService::handler() {
       return viewTask();
   }
 
-  return new TaskService(loggedInUser);
+  return new TaskService(_loggedInUser);
 }
 
 Service *TaskService::addTask() {
   int taskExist;
   std::vector<std::string> result;
-  view.displayMessage("Digite exit no campo de título caso deseje voltar!\n");
-  result = view.createTaskForm();
+  _view.displayMessage("Digite exit no campo de título caso deseje voltar!\n");
+  result = _view.createTaskForm();
   std::cout << result[0] << result[1] << result[2] << std::endl;
 
-  if (createTask(result[0], loggedInUser->username(), result[1], result[2])) {
-    view.displayMessage("Tarefa criada\n");
+  if (createTask(result[0], _loggedInUser->username(), result[1], result[2])) {
+    _view.displayMessage("Tarefa criada\n");
   } else {
-    view.displayMessage("Tarefa não criada! (Erro no sistema :( )\n");
+    _view.displayMessage("Tarefa não criada! (Erro no sistema :( )\n");
   }
-  return new TaskService(loggedInUser);
+  return new TaskService(_loggedInUser);
 }
 
 int TaskService::createTask(std::string title, std::string username,
                             std::string description,
                             std::string delivery_date) {
-  Task *t = repo.createTask(title, username, description, delivery_date);
+  Task *t = _repo.createTask(title, username, description, delivery_date);
   if (t == nullptr) return 0;
   return 1;
 }
@@ -42,15 +42,15 @@ Service *TaskService::viewTask() {
   int id;
   Task *task;
   do {
-    view.displayMessage("Digite exit no campo abaixo caso deseje voltar!\n");
-    id = view.viewTaskForm();
-    if (id == -1) return new TaskService(loggedInUser);
+    _view.displayMessage("Digite exit no campo abaixo caso deseje voltar!\n");
+    id = _view.viewTaskForm();
+    if (id == -1) return new TaskService(_loggedInUser);
     if (id == 0) {
-      view.displayMessage("Digite um número corretamente\n");
+      _view.displayMessage("Digite um número corretamente\n");
     } else {
-      task = repo.getTaskByIdAndUsername(id, loggedInUser->username());
+      task = _repo.getTaskByIdAndUsername(id, _loggedInUser->username());
       if (task == nullptr)
-        view.displayMessage("Não existe tarefa sua com esse id :/\n");
+        _view.displayMessage("Não existe tarefa sua com esse id :/\n");
     }
   } while (task == nullptr);
 
@@ -65,17 +65,17 @@ Service *TaskService::viewTask() {
   std::cout << "--------------------------" << std::endl;
   std::cout << "\n";
 
-  view.printViewOptions();
-  int response = stoi(view.getInput());
+  _view.printViewOptions();
+  int response = stoi(_view.getInput());
 
   switch (response) {
     case 0:
       return editTask();
     case 1:
-      return new TaskService(loggedInUser);
+      return new TaskService(_loggedInUser);
   }
 
-  return new TaskService(loggedInUser);
+  return new TaskService(_loggedInUser);
 }
 
-Service *TaskService::editTask() { return new TaskService(loggedInUser); }
+Service *TaskService::editTask() { return new TaskService(_loggedInUser); }

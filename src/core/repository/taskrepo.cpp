@@ -13,6 +13,7 @@ Task *TaskRepo::getTaskById(int id) {
   if (queryResult.size() == 0) {  // caso a fila de resultados esteja vazia
     return nullptr;
   }
+  std::cout << queryResult[0]["title"] << std::endl;
   Task *t = new Task(stoi(queryResult[0]["id"]), queryResult[0]["title"],
                      queryResult[0]["username"], queryResult[0]["description"],
                      queryResult[0]["delivery_date"],
@@ -31,6 +32,7 @@ Task *TaskRepo::createTask(std::string title, std::string username,
       title + "', '" + username + "', '" + description + "', '" + deliveryDate +
       "');";
   int r = execSql(sql);
+  std::cout << std::to_string(r) << std::endl;
   if (r) return getTaskById(r);
   return nullptr;
 }
