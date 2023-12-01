@@ -2,6 +2,6 @@
 #include "doctest.h"
 
 TEST_CASE("Exemplo") {
-    int a = 1;
-    CHECK(a == 1);
+  int a = 1;
+  CHECK(a == 1);
 }

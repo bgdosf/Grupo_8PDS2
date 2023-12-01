@@ -1,91 +1,155 @@
 #include "service/taskservice.hpp"
 
 Service *TaskService::handler() {
-  view.userTasks(loggedInUser->username());
-  view.printOptions();
-  int response = stoi(view.getInput());
+    _view.printOptions();
+    int response = _view.getInputNumber();
 
     switch (response) {
-        case 0:
-            return addTask();
+        case 0: 
+            return viewAllTasks();
         case 1:
+            return addTask();
+        case 2:
             return viewTask();
+        case 3:
+            return deleteTask();
+        case 4:
+            return finishTask();
+        case 5:
+            return addTag();
+        case 6:
+            return new TagService(*_loggedInUser);
     }
 
-  return new TaskService(loggedInUser); 
+    return new TaskService(_loggedInUser);
+}
+
+Service *TaskService::viewAllTasks() {
+    std::vector<Task *> tasks = _taskRepo.getAllTasks();
+
+    _view.userTasks(tasks, _loggedInUser->username());
+    
+    return new TaskService(_loggedInUser);
 }
 
 Service *TaskService::addTask() {
     int taskExist;
     std::vector<std::string> result;
-    std::string title;
-    view.displayMessage("Digite exit no campo de título caso deseje voltar!\n");
-    do {
-        title = view.createTitleTaskForm();
-        if (title == "exit") return new TaskService(loggedInUser);
-        int taskExist = checkTaskExistenceByTitle(title);
-        if (!taskExist) {
-            view.displayMessage("Tarefa com esse título já existe!\n");
-        }
-    } while(!taskExist);
-    
-    result = view.createTaskForm();
-
-    if (createTask(title, loggedInUser->username(), result[0], result[1])) {
-        view.displayMessage("Tarefa criada\n");
+    result = _view.createTaskForm();
+    if (createTask(result[0], result[1], result[2])) {
+        _view.displayMessage("Tarefa criada\n");
     } else {
-        view.displayMessage("Tarefa não criada! (Erro no sistema :( )\n");
+        _view.displayMessage("Tarefa não criada! (Erro no sistema :( )\n");
     }
-    return new TaskService(loggedInUser);
+    return new TaskService(_loggedInUser);
 }
 
-int TaskService::checkTaskExistenceByTitle(std::string title) {
-    Task *t = repo.getTaskByTitle(title);
-    if (t != nullptr) return 0;
+int TaskService::createTask(std::string title, std::string description,
+                            std::string delivery_date) {
+    Task *t = _taskRepo.createTask(title, description, delivery_date);
+    if (t == nullptr) return 0;
     return 1;
 }
 
-int TaskService::createTask(std::string title, std::string username, std::string description, std::string delivery_date) {
-    Task *t = repo.createTask(title, username, description, delivery_date);
-    if (t != nullptr) return 0;
-    return 1;
+Service *TaskService::deleteTask() {
+    int id;
+    Task *task;
+    do {
+        _view.displayMessage(
+            "Digite exit no campo abaixo caso deseje voltar!\n");
+        id = _view.deleteTaskForm();
+        if (id == -1) return new TaskService(_loggedInUser);
+        if (id == 0) {
+            _view.displayMessage("Digite um número corretamente\n");
+        } else {
+            task = _taskRepo.getTaskById(id);
+            if (task == nullptr) {
+                _view.displayMessage(
+                    "\nNão existe tarefa sua com esse id :/\n\n");
+            }
+            _taskRepo.deleteTask(id);
+        }
+    } while (task == nullptr);
+    return new TaskService(_loggedInUser);
 }
 
+Service *TaskService::finishTask() {
+    int id;
+    int result;
+    Task *task;
+    do {
+        _view.displayMessage(
+            "Digite exit no campo abaixo caso deseje voltar!\n");
+        id = _view.finishTaskForm();
+        if (id == -1) return new TaskService(_loggedInUser);
+        if (id == 0) {
+            _view.displayMessage("Digite um número corretamente\n");
+        } else {
+            task = _taskRepo.getTaskById(id);
+            if (task == nullptr) {
+                _view.displayMessage(
+                    "\nNão existe tarefa sua com esse id :/\n\n");
+            }
+            result = _taskRepo.finishTask(id);
+            if (result == -1) {
+                _view.displayMessage("\nA tarefa já está como concluída\n\n");
+                task = nullptr;
+            }
+        }
+    } while (task == nullptr);
+    return new TaskService(_loggedInUser);
+}
+
+Service *TaskService::addTag() {
+    int taskId;
+    Task *task;
+    Tag *tag;
+    do {
+        _view.displayMessage(
+            "Digite exit no campo abaixo caso deseje voltar!\n");
+        taskId = _view.addTagForm();
+        if (taskId == -1) return new TaskService(_loggedInUser);
+        if (taskId == 0) {
+            _view.displayMessage("Digite um número corretamente\n");
+        } else {
+            task = _taskRepo.getTaskById(taskId);
+            if (task == nullptr)
+                _view.displayMessage("Não existe tarefa sua com esse id :/\n");
+        }
+    } while (task == nullptr);
+    do {
+        std::string tagName;
+        _view.displayMessage(
+            "Digite exit no campo abaixo caso deseje voltar!\n");
+        tagName = _view.tagNameForm();
+        if (tagName == "exit") return new TaskService(_loggedInUser);
+        tag = _tagRepo.getTagByName(tagName);
+        if (tag == nullptr)
+            _view.displayMessage("Não existe tarefa sua com esse id :/\n");
+    } while (tag == nullptr);
+    _taskTagRepo.addTagToTask(taskId, tag->id());
+    
+    return new TaskService(_loggedInUser);
+}   
 
 Service *TaskService::viewTask() {
-  std::string title;
-  Task *task;
-  view.displayMessage("Digite exit no campo abaixo caso deseje voltar!\n");
-  do {
-        title = view.viewTaskForm();
-        if (title == "exit") return new TaskService(loggedInUser);
-        task = repo.getTaskByTitle(title);
-        if (task == nullptr) {
-            view.displayMessage("Tarefa com esse título não existe!\n");
+    int id;
+    Task *task;
+    do {
+        _view.displayMessage(
+            "Digite exit no campo abaixo caso deseje voltar!\n");
+        id = _view.viewTaskForm();
+        if (id == -1) return new TaskService(_loggedInUser);
+        if (id == 0) {
+            _view.displayMessage("Digite um número corretamente\n");
+        } else {
+            task = _taskRepo.getTaskById(id);
+            if (task == nullptr)
+                _view.displayMessage("Não existe tarefa sua com esse id :/\n");
         }
-  } while(task == nullptr);
+    } while (task == nullptr);
 
-  std::cout << "Título: " << task->title() << std::endl;
-  std::cout << "Descrição: " << task->description() << std::endl;
-  std::cout << "Data de Entrega: " << task->deliveryDate() << std::endl;
-  std::cout << "Tarefa finalidade? " << (task->isFinished() ? "SIM :)" : "Ainda não :/") << std::endl;
-  std::cout << "--------------------------" << std::endl;
-  std::cout << "\n";
+    _view.userTask(*task);
 
-  view.printViewOptions();
-  int response = stoi(view.getInput());
-
-  switch (response) {
-    case 0:
-        return editTask();
-    case 1:
-        return new TaskService(loggedInUser);
-    }
-
-  return new TaskService(loggedInUser);
-}
-
-Service *TaskService::editTask() {
-
-    return new TaskService(loggedInUser);
+    return new TaskService(_loggedInUser);
 }

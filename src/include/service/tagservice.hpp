@@ -13,15 +13,15 @@ public:
     Service *handler() override;
 
     /// @brief lista as tags do usuario
-    /// @return o proximo controller
+    /// @return o proximo service
     Service *listTags();
 
     /// @brief adiciona uma tag
-    /// @return o proximo controller
+    /// @return o proximo service
     Service *addTag();
 
     /// @brief atualiza uma tag
-    /// @return o proximo controller
+    /// @return o proximo service
     Service *updateTag();
 
 
