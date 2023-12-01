@@ -6,9 +6,8 @@
 #include "model/user.hpp"
 #include "repository/abstractrepo.hpp"
 
-class TagRepo : public Repo
-{
-public:
+class TagRepo : public Repo {
+   public:
     /// @brief Inicia o repositorio
     /// @param u
     TagRepo(User u) : _u(u) {}
@@ -22,6 +21,12 @@ public:
     /// @return a tag buscada (nullptr caso ela não exista)
     Tag *getTagByName(std::string tagname);
 
+    /// @brief Retorna a tag buscada pelo ID
+    /// @param id O ID da tag a ser buscada
+    /// @return A tag buscada (nullptr caso não exista)
+    Tag *getTagById(int id);
+
+
     /// @brief cria uma tag com o nome passado
     /// @param tagname
     /// @return a tag criada
@@ -32,6 +37,6 @@ public:
     /// @return a tag alterada
     Tag *updateTag(Tag t, std::string tagname);
 
-private:
+   private:
     User _u;
 };

@@ -11,4 +11,6 @@ class View {
   /// @brief obtem input do usuario
   /// @return input obtido
   virtual std::string getInput() const;
+
+  virtual int getInputNumber() const;
 };

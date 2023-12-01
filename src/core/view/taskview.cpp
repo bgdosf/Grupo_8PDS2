@@ -1,6 +1,6 @@
 #include "view/taskview.hpp"
 
-int checkStoiFunction(std::string num) {
+int checkStoiFunctionInput(std::string num) {
     int numResult;
     try {
         numResult = stoi(num);
@@ -13,17 +13,13 @@ int checkStoiFunction(std::string num) {
 void TaskView::printOptions() {
     displayMessage("==================================================\n");
     displayMessage("Digite a opção que deseja acessar:\n");
-    displayMessage("0 - Criar Tarefa\n");
-    displayMessage("1 - Ver Tarefa\n");
-    displayMessage("2 - Excluir Tarefa\n");
-    displayMessage("3 - Finalizar Tarefa\n\n");
-}
-
-void TaskView::printViewOptions() {
-    displayMessage("==================================================\n");
-    displayMessage("Digite a opção que deseja acessar:\n");
-    displayMessage("0 - Editar essa Tarefa\n");
-    displayMessage("1 - Voltar para a Lista de Tarefas\n\n");
+    displayMessage("0 - Listar Tarefas\n");
+    displayMessage("1 - Criar Tarefa\n");
+    displayMessage("2 - Ver Tarefa\n");
+    displayMessage("3 - Excluir Tarefa\n");
+    displayMessage("4 - Finalizar Tarefa\n");
+    displayMessage("5 - Adicionar Tag a uma Tarefa\n");
+    displayMessage("6 - Entrar na tela de Tags\n\n");
 }
 
 void TaskView::userTasks(std::vector<Task *> tasks, std::string username) {
@@ -48,6 +44,7 @@ void TaskView::userTasks(std::vector<Task *> tasks, std::string username) {
 }
 
 void TaskView::userTask(Task task) {
+    std::vector<Tag *> tags = task.tags();
     std::cout << "ID: " << task.id() << std::endl;
     std::cout << "Título: " << task.title() << std::endl;
     if (task.description() != "")
@@ -56,6 +53,13 @@ void TaskView::userTask(Task task) {
         std::cout << "Data de Entrega: " << task.deliveryDate() << std::endl;
     std::cout << "Tarefa finalidade? "
               << (task.isFinished() ? "SIM :)" : "Ainda não :/") << std::endl;
+    if (tags.size() != 0) {
+        std::string tagsString = "Tags: ";
+        for (auto tag : tags) {
+            tagsString += tag->name() + " ";
+        }
+        std::cout << tagsString << std::endl;
+    }
     std::cout << "--------------------------" << std::endl;
     std::cout << "\n";
 }
@@ -70,10 +74,13 @@ std::vector<std::string> TaskView::createTaskForm() {
     int days_from_now;
     do {
         displayMessage(
-            "Número de dias a partir de hoje para data de término: \n "
-            "Se quiser optar por uma tarefa sem data digite 0\n");
+            "Número de dias a partir de hoje para data de término: \n");
         std::string days_from_now_string = getInput();
-        days_from_now = checkStoiFunction(days_from_now_string);
+        if(days_from_now_string == "")  {
+            days_from_now = 0;
+            continue;
+        }
+        days_from_now = checkStoiFunctionInput(days_from_now_string);
         if (days_from_now == -1) {
             displayMessage("Isso não é um número válido! Tente novamente...\n");
         }
@@ -110,7 +117,7 @@ int TaskView::viewTaskForm() {
     displayMessage("Qual o id da tarefa que deseja ver? ");
     std::string id = getInput();
     if (id == "exit") return -1;
-    int idNum = checkStoiFunction(id);
+    int idNum = checkStoiFunctionInput(id);
 
     return idNum;
 }
@@ -119,7 +126,7 @@ int TaskView::deleteTaskForm() {
     displayMessage("Qual o id da tarefa que deseja excluir?\n");
     std::string id = getInput();
     if (id == "exit") return -1;
-    int idNum = checkStoiFunction(id);
+    int idNum = checkStoiFunctionInput(id);
 
     return idNum;
 }
@@ -128,7 +135,23 @@ int TaskView::finishTaskForm() {
     displayMessage("Qual o id da tarefa que deseja finalizar?\n");
     std::string id = getInput();
     if (id == "exit") return -1;
-    int idNum = checkStoiFunction(id);
+    int idNum = checkStoiFunctionInput(id);
 
     return idNum;
+}
+
+int TaskView::addTagForm() {
+    displayMessage("Qual o id da tarefa que deseja adicionar uma tag?\n");
+    std::string id = getInput();
+    if (id == "exit") return -1;
+    int idNum = checkStoiFunctionInput(id);
+
+    return idNum;
+}
+
+std::string TaskView::tagNameForm() {
+    displayMessage("Qual o nome da tag que você quer adicionar?\n");
+    std::string tagName = getInput();
+
+    return tagName;
 }

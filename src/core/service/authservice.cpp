@@ -4,7 +4,7 @@
 
 Service *AuthService::handler() {
   _view.printWelcome();
-  int response = stoi(_view.getInput());
+  int response = _view.getInputNumber();
 
   switch (response) {
     case 0:
