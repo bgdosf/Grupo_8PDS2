@@ -1,8 +1,5 @@
 .vscode
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
+bin
 Makefile
 cmake_install.cmake
 TaskManager
