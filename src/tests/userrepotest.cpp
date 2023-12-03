@@ -10,8 +10,8 @@ TEST_CASE("Testando repositório de usuário") {
   UserRepo repo;
 
   SUBCASE("Testando adição de um usuário") {
-    User *u = repo.createUser("luan", "luan1810");
-    CHECK(u->username() == "luan");
+    User *u = repo.createUser("borges", "borges");
+    CHECK(u->username() == "borges");
   }
 
   remove(dbname);
