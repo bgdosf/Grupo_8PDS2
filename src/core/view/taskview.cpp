@@ -51,7 +51,7 @@ void TaskView::userTask(Task task) {
         std::cout << "Descrição: " << task.description() << std::endl;
     if (task.deliveryDate() != "")
         std::cout << "Data de Entrega: " << task.deliveryDate() << std::endl;
-    std::cout << "Tarefa finalidade? "
+    std::cout << "Tarefa finalizada? "
               << (task.isFinished() ? "SIM :)" : "Ainda não :/") << std::endl;
     if (tags.size() != 0) {
         std::string tagsString = "Tags: ";

@@ -1,17 +1,10 @@
 # Task Manager
 
-## Instalação:
+## Visão Geral
+Projeto de um Task Manager desenvolvido ao longo da disciplina de PDS2, possui funcionalidades de adição de tasks, datas, tags para organização de tasks, entre outras.
 
-### Dependencias:
-Linux: ```sudo apt-get install cmake sqlite3 libsqlite3-dev``` 
+## Como utilizar
+make run #executa o codigo
+make test #executar testes
+make clean #limpa o diretorio de bin
 
-### Gerando executáveis:
-``` cmake .```\
-``` make```\
-``` ./TaskManager createdb```
-
-### Testando:
-``` ./Tests```
-
-### Rodando:
-```./TaskManager run```

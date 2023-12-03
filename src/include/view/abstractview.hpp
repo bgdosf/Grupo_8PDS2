@@ -12,5 +12,7 @@ class View {
   /// @return input obtido
   virtual std::string getInput() const;
 
+  /// @brief obtem um input de inteiro
+  /// @return o inteiro
   virtual int getInputNumber() const;
 };
