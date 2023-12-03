@@ -1,6 +1,5 @@
 .vscode
 bin
-Makefile
 cmake_install.cmake
 TaskManager
 Tests

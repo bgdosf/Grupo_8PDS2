@@ -1,0 +1,6 @@
+
+PROJECT_NAME           = "Task Manager"
+PROJECT_BRIEF          = "Projeto de um taskmanager desenvolvido para a disciplina de PDS2"
+RECURSIVE = YES
+GENERATE_LATEX = NO
+FULL_PATH_NAMES = NO
