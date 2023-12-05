@@ -13,6 +13,9 @@ O sistema de login e registro é implementado de forma a garantir a segurança d
 - Data limite de tarefas para organização de prioridades
 - Finalização de tarefas já concluidas
 
+## Dependências 
+sqlite3, libsqlite3-dev
+
 
 ## Como utilizar
 make run #executa o codigo \
